@@ -58,7 +58,7 @@ namespace Dapper.Infrastructure.Repository
             {
                 connection.Open();
                 var result = await connection.QuerySingleOrDefaultAsync<Product>(sql, new { Id = id });
-                return result;
+                return result!;
             }
         }
 
