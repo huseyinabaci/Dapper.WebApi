@@ -7,6 +7,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+// Add CORS services
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
+
 // Add services from Infrastructure
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
@@ -23,6 +35,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Enable CORS
+app.UseCors("AllowAllOrigins");
 
 app.UseAuthorization();
 
